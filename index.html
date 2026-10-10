@@ -1,0 +1,93 @@
+inbex.ht ml
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>可愛貓咪鍵盤</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffd3e5, #d9d4ff, #c8f5ed);
+  color: #554254;
+  padding: 20px;
+}
+h1 { margin: 8px; }
+.cat { font-size: 120px; animation: bob 2s infinite ease-in-out; }
+@keyframes bob {
+  50% { transform: translateY(-10px); }
+}
+#message { margin: 12px; min-height: 24px; }
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(25px, 1fr));
+  gap: 6px;
+  width: min(600px, 100%);
+  padding: 14px;
+  border-radius: 18px;
+  background: #f8f4ff;
+  box-shadow: 0 8px 0 #c5b5d9;
+}
+button {
+  border: 0;
+  border-radius: 8px;
+  background: white;
+  color: #65536c;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 2px;
+  box-shadow: 0 3px 0 #ddcde8;
+  cursor: pointer;
+}
+button:active, button.pressed {
+  transform: translateY(3px);
+  box-shadow: none;
+  background: #ffb8d5;
+}
+.space { grid-column: span 5; }
+</style>
+</head>
+<body>
+<h1> ฅ^•ﻌ•^ฅ 貓咪打字屋</h1>
+<div class="cat">🐱</div>
+<div id="message">按鍵盤或點擊按鈕，跟貓咪玩吧！</div>
+<div class="keyboard" id="keyboard"></div>
+<script>
+const keys = "QWERTYUIOPASDFGHJKLZXCVBNM".split("");
+const board = document.getElementById("keyboard");
+keys.forEach(key => {
+  const btn = document.createElement("button");
+  btn.textContent = key;
+  btn.addEventListener("click", () => {
+    document.getElementById("message").textContent =
+      "喵～你按了 " + key + "！ ฅ^•ﻌ•^ฅ";
+    btn.classList.add("pressed");
+    setTimeout(() => btn.classList.remove("pressed"), 150);
+  });
+  board.appendChild(btn);
+});
+const space = document.createElement("button");
+space.textContent = "🐾 空白鍵";
+space.className = "space";
+space.addEventListener("click", () => {
+  document.getElementById("message").textContent = "喵喵！你摸摸貓咪了！";
+});
+board.appendChild(space);
+document.addEventListener("keydown", e => {
+  const key = e.key.toUpperCase();
+  if (keys.includes(key)) {
+    document.getElementById("message").textContent =
+      "喵～你按了 " + key + "！ ฅ^•ﻌ•^ฅ";
+  }
+});
+</script>
+</body>
+</html>
